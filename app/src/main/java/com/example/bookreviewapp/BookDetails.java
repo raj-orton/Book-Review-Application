@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,7 +37,7 @@ public class BookDetails extends AppCompatActivity {
         save = findViewById(R.id.Save);
 
         Cursor cursor = db.getBookData(book);
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             title.setText(cursor.getString(cursor.getColumnIndex("TITLE")));
             description.setText(cursor.getString(cursor.getColumnIndex("DESCRIPTION")));
             author.setText("Author: " + cursor.getString(cursor.getColumnIndex("AUTHOR")));
@@ -46,21 +47,20 @@ public class BookDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.updateSaved(book);
-                udb.updateSavedData(book,udb.getSavedData(user_mail),user_mail);
-                Toast.makeText(getApplicationContext(),"Saved" ,Toast.LENGTH_SHORT).show();
+                udb.updateSavedData(book, udb.getSavedData(user_mail), user_mail);
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
         add_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(rdb.review(udb.getUsername(new signin().getUser()),book) < 1){
-                    Intent intent = new  Intent(getBaseContext(), AddReview.class);
+                if (rdb.review(udb.getUsername(new signin().getUser()), book) < 1) {
+                    Intent intent = new Intent(getBaseContext(), AddReview.class);
                     intent.putExtra("book", book);
                     startActivity(intent);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"Review already added" ,Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Review already added", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -68,7 +68,7 @@ public class BookDetails extends AppCompatActivity {
         view_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new  Intent(getBaseContext(), ReviewList.class);
+                Intent intent = new Intent(getBaseContext(), ReviewList.class);
                 intent.putExtra("book", book);
                 startActivity(intent);
             }

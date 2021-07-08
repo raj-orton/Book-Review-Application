@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,21 +38,19 @@ public class AddBook extends AppCompatActivity {
                 String add_description = description.getText().toString();
 
                 Cursor cursor = book_db.getBookData(add_title);
-                if(cursor.getCount() > 0){
+                if (cursor.getCount() > 0) {
                     Toast.makeText(AddBook.this, "Book Already Exists", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(add_title.length() != 0 && add_author.length() != 0 && add_description.length() != 0
-                            && book_db.insertData(add_title,add_author,add_description,0,0) ){
+                } else {
+                    if (add_title.length() != 0 && add_author.length() != 0 && add_description.length() != 0
+                            && book_db.insertData(add_title, add_author, add_description, 0, 0)) {
                         Toast.makeText(AddBook.this, "Book Added", Toast.LENGTH_SHORT).show();
                         title.setText("");
                         author.setText("");
                         description.setText("");
-                        Intent intent = new  Intent(getBaseContext(), BookList.class);
+                        Intent intent = new Intent(getBaseContext(), BookList.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(AddBook.this, "Fill All Details", Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         newuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new  Intent(getBaseContext(), signup.class);
+                Intent intent = new Intent(getBaseContext(), signup.class);
                 startActivity(intent);
             }
         });
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new  Intent(getBaseContext(), signin.class);
+                Intent intent = new Intent(getBaseContext(), signin.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,7 +10,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class AddReview extends AppCompatActivity{
+public class AddReview extends AppCompatActivity {
 
     ReviewDB review_db;
     UserDB user_db;
@@ -44,18 +45,17 @@ public class AddReview extends AppCompatActivity{
             public void onClick(View v) {
                 String review_description = description.getText().toString();
                 Cursor cursor = review_db.getReviewData(book);
-                new_rating = (rate.getRating() + book_db.getRating(book))/(cursor.getCount()+1);
-                new_rating = (int)new_rating;
-                book_db.updateRating(new_rating,book);
-                if(review_description.length() != 0
-                        && review_db.insertData(user_db.getUsername(user.getUser()),book,review_description,new_rating)){
+                new_rating = (rate.getRating() + book_db.getRating(book)) / (cursor.getCount() + 1);
+                new_rating = (int) new_rating;
+                book_db.updateRating(new_rating, book);
+                if (review_description.length() != 0
+                        && review_db.insertData(user_db.getUsername(user.getUser()), book, review_description, new_rating)) {
                     description.setText("");
                     rate.setRating(0);
-                    Intent intent = new  Intent(getBaseContext(), BookList.class);
+                    Intent intent = new Intent(getBaseContext(), BookList.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(AddReview.this, "Fill All Details", Toast.LENGTH_SHORT).show();
                 }
             }

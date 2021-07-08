@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 
@@ -38,8 +40,8 @@ public class BookSaved extends AppCompatActivity {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = ((TextView)view.findViewById(R.id.BookName)).getText().toString();
-                Intent intent = new  Intent(getBaseContext(), BookDetails.class);
+                String selectedItem = ((TextView) view.findViewById(R.id.BookName)).getText().toString();
+                Intent intent = new Intent(getBaseContext(), BookDetails.class);
                 intent.putExtra("book", selectedItem);
                 startActivity(intent);
             }
@@ -47,13 +49,12 @@ public class BookSaved extends AppCompatActivity {
     }
 
 
-    private void viewBookData(){
+    private void viewBookData() {
         Cursor cursor = db.getSavedBookData();
-        if(cursor.getCount() == 0){
-            Toast.makeText(this,"No Books yet!",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            while(cursor.moveToNext()){
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "No Books yet!", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
                 book_name.add(cursor.getString(cursor.getColumnIndex("TITLE")));
                 author_name.add(cursor.getString(cursor.getColumnIndex("AUTHOR")));
                 float new_rating = cursor.getFloat(cursor.getColumnIndex("RATING"));

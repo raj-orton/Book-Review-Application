@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,9 +24,10 @@ public class BookDB extends SQLiteOpenHelper {
             SAVED + " INT, " +
             RATING + " REAL " + ")";
 
-    public BookDB(Context context){
-        super(context, DB_NAME , null, 1);
+    public BookDB(Context context) {
+        super(context, DB_NAME, null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase book_db) {
         book_db.execSQL(CREATE_TABLE);
@@ -38,7 +40,7 @@ public class BookDB extends SQLiteOpenHelper {
     }
 
     //insert data
-    public boolean insertData(String title, String author, String description, int saved, float rating){
+    public boolean insertData(String title, String author, String description, int saved, float rating) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TITLE, title);
@@ -47,74 +49,76 @@ public class BookDB extends SQLiteOpenHelper {
         contentValues.put(SAVED, saved);
         contentValues.put(RATING, rating);
 
-        long result = db.insert(DB_TABLE, null , contentValues);
+        long result = db.insert(DB_TABLE, null, contentValues);
 
         return result != -1; //if result -1 data doesn't insert
     }
 
     //view data
-    public Cursor viewBookData(){
+    public Cursor viewBookData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "Select * from " + DB_TABLE;
-        Cursor cursor = db.rawQuery(query,null);
+        Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
 
     //get book details
-    public Cursor getBookData(String title){
+    public Cursor getBookData(String title) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from " + DB_TABLE + " WHERE " +TITLE+" Like '%"+title+"%'";
-        Cursor cursor = db.rawQuery(query,null);
+        String query = "Select * from " + DB_TABLE + " WHERE " + TITLE + " Like '%" + title + "%'";
+        Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
 
     //get saved books
-    public Cursor getSavedBookData(){
+    public Cursor getSavedBookData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from " + DB_TABLE + " WHERE " +SAVED+" Like '%"+1+"%'";
-        Cursor cursor = db.rawQuery(query,null);
+        String query = "Select * from " + DB_TABLE + " WHERE " + SAVED + " Like '%" + 1 + "%'";
+        Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
 
 
     //update save data
-    public void updateSaved(String book){
+    public void updateSaved(String book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(SAVED, 1);
         String whereClause = "TITLE=?";
         String whereArgs[] = {book.toString()};
-        db.update(DB_TABLE, newValues, whereClause,whereArgs);
+        db.update(DB_TABLE, newValues, whereClause, whereArgs);
     }
 
     //reset save data
-    public void resetSaved(String book){
+    public void resetSaved(String book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(SAVED, 0);
         String whereClause = "TITLE=?";
         String whereArgs[] = {book.toString()};
-        db.update(DB_TABLE, newValues, whereClause,whereArgs);
+        db.update(DB_TABLE, newValues, whereClause, whereArgs);
     }
 
     //get rating
-    public Float getRating(String title){
+    public Float getRating(String title) {
         float rating = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from "+ DB_TABLE + " WHERE " +TITLE+" LIKE '%" + title + "%'";
-        Cursor cursor = db.rawQuery(query,null);
-        while(cursor.moveToNext()){rating = cursor.getFloat(cursor.getColumnIndex("RATING"));}
+        String query = "Select * from " + DB_TABLE + " WHERE " + TITLE + " LIKE '%" + title + "%'";
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            rating = cursor.getFloat(cursor.getColumnIndex("RATING"));
+        }
         return rating;
     }
 
     //update rating
-    public void updateRating(float new_rating, String book){
+    public void updateRating(float new_rating, String book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(RATING, new_rating);
         String whereClause = "TITLE=?";
         String whereArgs[] = {book.toString()};
-        db.update(DB_TABLE, newValues, whereClause,whereArgs);
+        db.update(DB_TABLE, newValues, whereClause, whereArgs);
     }
 
 }

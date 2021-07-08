@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class BookList extends AppCompatActivity {
@@ -35,8 +37,8 @@ public class BookList extends AppCompatActivity {
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = ((TextView)view.findViewById(R.id.BookName)).getText().toString();
-                Intent intent = new  Intent(getBaseContext(), BookDetails.class);
+                String selectedItem = ((TextView) view.findViewById(R.id.BookName)).getText().toString();
+                Intent intent = new Intent(getBaseContext(), BookDetails.class);
                 intent.putExtra("book", selectedItem);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -45,38 +47,37 @@ public class BookList extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_addbook,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_addbook, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId()==R.id.menu_book){
-            Intent intent = new  Intent(getBaseContext(), AddBook.class);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_book) {
+            Intent intent = new Intent(getBaseContext(), AddBook.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-        if(item.getItemId()==R.id.menu_savedbook){
-            Intent intent = new  Intent(getBaseContext(), BookSaved.class);
+        if (item.getItemId() == R.id.menu_savedbook) {
+            Intent intent = new Intent(getBaseContext(), BookSaved.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-        if(item.getItemId()==R.id.menu_signout){
-            Intent intent = new  Intent(getBaseContext(), MainActivity.class);
+        if (item.getItemId() == R.id.menu_signout) {
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void viewBookData(){
+    private void viewBookData() {
         Cursor cursor = db.viewBookData();
-        if(cursor.getCount() == 0){
-            Toast.makeText(this,"No Books yet!",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            while(cursor.moveToNext()){
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "No Books yet!", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
                 book_name.add(cursor.getString(cursor.getColumnIndex("TITLE")));
                 author_name.add(cursor.getString(cursor.getColumnIndex("AUTHOR")));
                 float new_rating = cursor.getFloat(cursor.getColumnIndex("RATING"));

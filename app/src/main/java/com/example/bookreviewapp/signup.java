@@ -1,4 +1,5 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -39,27 +40,24 @@ public class signup extends AppCompatActivity {
                 String saved = "";
 
                 Cursor cursor = user_db.userExist(signup_email);
-                if(cursor.getCount() < 1){
-                    if(signup_name.length() != 0 && signup_phone.length() != 0 && signup_email.length() != 0 && signup_password.length() != 0
-                            && user_db.insertData(signup_name,signup_phone,signup_email,signup_password,saved)){
+                if (cursor.getCount() < 1) {
+                    if (signup_name.length() != 0 && signup_phone.length() != 0 && signup_email.length() != 0 && signup_password.length() != 0
+                            && user_db.insertData(signup_name, signup_phone, signup_email, signup_password, saved)) {
 
-                        if(signup_password.equals(signup_confpass)) {
+                        if (signup_password.equals(signup_confpass)) {
                             Toast.makeText(signup.this, "Signed Up", Toast.LENGTH_SHORT).show();
                             name.setText("");
                             phone.setText("");
                             email.setText("");
                             password.setText("");
                             confpass.setText("");
-                        }
-                        else{
+                        } else {
                             Toast.makeText(signup.this, "Passwords Mismatch", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(signup.this, "Fill all fields", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(signup.this, "User Already Exists", Toast.LENGTH_SHORT).show();
                     name.setText("");
                     phone.setText("");

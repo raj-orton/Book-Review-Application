@@ -1,14 +1,16 @@
 package com.example.bookreviewapp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 
-public class ReviewList extends AppCompatActivity{
+public class ReviewList extends AppCompatActivity {
 
     ReviewDB db;
 
@@ -36,13 +38,12 @@ public class ReviewList extends AppCompatActivity{
         reviewList.setAdapter(customAdapter);
     }
 
-    private void getReviewData(){
+    private void getReviewData() {
         Cursor cursor = db.getReviewData(book);
-        if(cursor.getCount() == 0){
-            Toast.makeText(this,"No Reviews yet!",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            while(cursor.moveToNext()){
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "No Reviews yet!", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
                 user.add(cursor.getString(cursor.getColumnIndex("USER")));
                 user_review.add(cursor.getString(cursor.getColumnIndex("DESCRIPTION")));
             }
